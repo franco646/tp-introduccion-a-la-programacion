@@ -64,6 +64,7 @@ def saveFavourite(request):
     pass
 
 
+
 @login_required
 def deleteFavourite(request):
     pass
