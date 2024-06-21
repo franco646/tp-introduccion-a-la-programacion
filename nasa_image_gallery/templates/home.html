@@ -38,5 +38,17 @@
         </div>
         {% endfor %}
     </div>
+    <div class="row justify-content-center" style="margin-block: 100px;">
+        <div class="col col-auto"> 
+            <nav>
+                <ul class="pagination">
+                    {% for i in q_pages %}
+                        <li class="page-item"><a class="page-link" href="{% url 'home' %}?page={{ i }}">{{ i }}</a></li>
+                    {% endfor %}
+                </ul>
+            </nav>
+        </div>
+    </div>
+    
 </main>
 {% endblock %}
