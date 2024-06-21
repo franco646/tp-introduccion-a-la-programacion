@@ -67,21 +67,26 @@ def logout_view(request):
 # las siguientes funciones se utilizan para implementar la sección de favoritos: traer los favoritos de un usuario, guardarlos, eliminarlos y desloguearse de la app.
 @login_required
 def getAllFavouritesByUser(request):
-    favourite_list = []
+    favourite_list = services_nasa_image_gallery.getAllFavouritesByUser(request)
     return render(request, 'favourites.html', {'favourite_list': favourite_list})
+
 
 
 @login_required
 def saveFavourite(request):
-    pass
-
+    if request.method == 'POST':
+        services_nasa_image_gallery.saveFavourite(request)
+    return redirect('home')
 
 
 @login_required
 def deleteFavourite(request):
-    pass
+    if request.method == 'POST':
+        services_nasa_image_gallery.deleteFavourite(request)
+    return redirect('home')
 
 
 @login_required
 def exit(request):
-    pass
+    logout(request)
+    return redirect('login')

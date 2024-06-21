@@ -23,28 +23,26 @@ def getImagesBySearchInputLike(input):
 
 # añadir favoritos (usado desde el template 'home.html')
 def saveFavourite(request):
-    fav = mapper.map_to_nasa_card(request)  # Transformar request del template en NASACard
+    fav = mapper.fromTemplateIntoNASACard(request)  # Transformar request del template en NASACard
     fav.user = get_user(request)  # Asignar usuario correspondiente
-    
-    return repositories.saveFavourite(fav) # lo guardamos en la base.
+    return repositories.saveFavourite(fav)  # lo guardamos en la base.
 
 
 # usados en el template 'favourites.html'
 def getAllFavouritesByUser(request):
-    if not request.user.is_authenticated:  #chequea si el usuario inició sesión
-        return []  #si no hay usuario no hay favoritos xd
+    if not request.user.is_authenticated:  # chequea si el usuario inició sesión
+        return []  # si no hay usuario no hay favoritos
     else:
-        user = get_user(request)  #si inició sesión manda la solicitud para mostrar favoritos
+        user = get_user(request)  # si inició sesión manda la solicitud para mostrar favoritos
 
-        favourite_list = []  # Tenemos una lista vacía para guardar los favoritos del usuario
-        mapped_favourites = [] # Y acá una lista vacía donde se meten las NASACards mapeadas
+        favourite_list = repositories.getAllFavouritesByUser(user)  # obtenemos los favoritos del usuario desde la base de datos
+        mapped_favourites = []  # lista donde se meten las NASACards mapeadas
 
         for favourite in favourite_list:
-            nasa_card = '' # transformamos cada favorito en una NASACard, y lo almacenamos en nasa_card.
+            nasa_card = mapper.fromRepositoryIntoNASACard(favourite)  # transformamos cada favorito en una NASACard
             mapped_favourites.append(nasa_card)
 
         return mapped_favourites
-
 
 def deleteFavourite(request):
     favId = request.POST.get('id')
