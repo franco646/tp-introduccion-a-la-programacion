@@ -71,7 +71,7 @@ def saveFavourite(request):
 def deleteFavourite(request):
     if request.method == 'POST':
         services_nasa_image_gallery.deleteFavourite(request)
-    return redirect('home')
+    return redirect('favoritos')
 
 
 @login_required
