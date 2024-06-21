@@ -23,11 +23,9 @@ def home(request, images_filtered=None):
     Q_IMAGES_PER_PAGE = 10 # define la cantidad de imagagenes que va a haber por cada pagina
     # llama a la función auxiliar getAllImagesAndFavouriteList() y obtiene 2 listados: uno de las imágenes de la API y otro de favoritos por usuario*.
     # (*) este último, solo si se desarrolló el opcional de favoritos; caso contrario, será un listado vacío [].
-    if not images_filtered:
-        images, favourite_list = getAllImagesAndFavouriteList(request)  #acá me esta dando las imagenes para mostrar en el inicio
-    else:
+    images, favourite_list = getAllImagesAndFavouriteList(request)  #acá me esta dando las imagenes para mostrar en el inicio
+    if images_filtered:
         images = images_filtered
-        favourite_list = []
     
     page = int(request.GET.get('page', '') or 1) # obtiene la pagina actual que es pasada a traves de un query, en caso de que no esté definido toma 1
     q_pages = math.ceil(len(images) / Q_IMAGES_PER_PAGE) # define la cantidad de paginas, dividiendo la cantidad de images por la cantidad de imagenes que deben mostrarse en cada pagina y rendondea para arriba
