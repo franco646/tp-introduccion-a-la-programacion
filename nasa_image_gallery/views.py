@@ -6,6 +6,7 @@ from django.shortcuts import redirect, render
 from .layers.services import services_nasa_image_gallery
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout, login, authenticate
+from django.contrib.auth.models import User
 from django.core.paginator import Paginator
 from django.http import HttpResponse
 
@@ -70,13 +71,34 @@ def login_view(request):
             login(request, user)
             return home(request)
         else:
-            return render(request, "registration/login.html", { "error": "El usuario no existe" })
+            return render(request, "registration/login.html", { "error": "Usuario o contraseña incorrectos" })
     else:
         return render(request, "registration/login.html")
         
 def logout_view(request):
     logout(request)
     return render(request, "registration/login.html")
+
+def signup_view(request):
+    if request.method == 'POST':
+        username = request.POST["username"]
+        password = request.POST["password"]  
+        repeat_password = request.POST["repeat_password"]  
+
+        if password != repeat_password:
+            return render(request, "registration/signup.html", { 'error': 'Las contraseñas deben coincidir' }) 
+
+        user_already_exists = User.objects.filter(username=username).exists()
+
+        if user_already_exists:
+            return render(request, "registration/signup.html", { 'error': 'El nombre de usuario ya existe' }) 
+
+        user = User.objects.create_user(username, None, password)
+        user.save()
+
+        return redirect('login')
+    else:
+        return render(request, "registration/signup.html")
 
 
 # las siguientes funciones se utilizan para implementar la sección de favoritos: traer los favoritos de un usuario, guardarlos, eliminarlos y desloguearse de la app.

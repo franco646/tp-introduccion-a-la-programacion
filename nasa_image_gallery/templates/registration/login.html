@@ -10,10 +10,13 @@
             <input type="password" name="password" id="password" class="form-control" placeholder="Contraseña" required="required">
         </div>
         {% if error %}
-            <div>{{ error }}</div>
+            <div class="text-danger"><small>{{ error }}</small></div>
         {% endif %}
+        <div class="form-group" style="margin-bottom: 5%;">
+            <button type="submit" class="btn btn-primary btn-block w-100">Ingresar</button>
+        </div>
         <div class="form-group">
-            <button type="submit" class="btn btn-primary btn-block">Ingresar</button>
+            <a href="{% url 'signup' %}" class="btn btn-primary btn-block w-100 bg-dark">Crear usuario</a>
         </div>
     </form>
 </div>
