@@ -10,7 +10,7 @@ def getAllImages(input=None): #Agregado por facu 20/06
     images = [] #Acá guarda las fotos despues cuando convierte lis archivos JSON en NASACards
 
     for obj in json_collection: #lee cada objeto en json_collection :v
-        if 'data' in obj and 'links' in obj: #esto verifica si el objeto anterior tiene datos y links necesarios para crear una NASACard
+        if 'data' in obj and 'links' in obj and 'description' in obj['data'][0]: #esto verifica si el objeto anterior tiene datos y links necesarios para crear una NASACard
             nasa_card = mapper.fromRequestIntoNASACard(obj)  # Convierte con magia los JSON a NASACard usando mapper
             images.append(nasa_card) #guarda las fotos(NASACards) en images
 
