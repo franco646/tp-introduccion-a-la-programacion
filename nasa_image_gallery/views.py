@@ -6,6 +6,7 @@ from django.shortcuts import redirect, render
 from .layers.services import services_nasa_image_gallery
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout, login, authenticate
+from django.core.paginator import Paginator
 from django.http import HttpResponse
 
 # función que invoca al template del índice de la aplicación.
@@ -19,26 +20,22 @@ def getAllImagesAndFavouriteList(request):
     return images, favourite_list
 
 # función principal de la galería.
-def home(request, images_filtered=None):
-    Q_IMAGES_PER_PAGE = 10 # define la cantidad de imagagenes que va a haber por cada pagina
-    # llama a la función auxiliar getAllImagesAndFavouriteList() y obtiene 2 listados: uno de las imágenes de la API y otro de favoritos por usuario*.
-    # (*) este último, solo si se desarrolló el opcional de favoritos; caso contrario, será un listado vacío [].
-    images, favourite_list = getAllImagesAndFavouriteList(request)  #acá me esta dando las imagenes para mostrar en el inicio
-    if images_filtered:
-        images = images_filtered
+def home(request):
+    Q_IMAGES_PER_PAGE = 10  # Define la cantidad de imágenes por página
     
-    page = int(request.GET.get('page', '') or 1) # obtiene la pagina actual que es pasada a traves de un query, en caso de que no esté definido toma 1
-    q_pages = math.ceil(len(images) / Q_IMAGES_PER_PAGE) # define la cantidad de paginas, dividiendo la cantidad de images por la cantidad de imagenes que deben mostrarse en cada pagina y rendondea para arriba
+    images, favourite_list = getAllImagesAndFavouriteList(request)
 
-    filtered_images = []
-    for i in range(Q_IMAGES_PER_PAGE * (page - 1), Q_IMAGES_PER_PAGE * (page - 1) + Q_IMAGES_PER_PAGE): 
-        if i < len(images) and not i > len(images): # Si "i" está dentro del len(images) agrega la imagen[i] a la lista vacia
-            filtered_images.append(images[i])
-        else: # si está fuera del rango termina el ciclo
-            break
-
-    return render(request, 'home.html', {'images': filtered_images, 'favourite_list': favourite_list, 'q_pages': range(1, q_pages + 1)})
-
+    page = int(request.GET.get('page', '1')) # obtiene el numeor de pagina actual
+    
+    paginator = Paginator(images, Q_IMAGES_PER_PAGE) # Utiliza el Paginator de Django para manejar la paginación
+    
+    filtered_images = paginator.page(page) # Obtiene las imágenes para la página actual
+    
+    return render(request, 'home.html', {
+        'images': filtered_images,
+        'favourite_list': favourite_list,
+        'q_pages': range(1, paginator.num_pages + 1),
+    })
 
 # función utilizada en el buscador.
 def search(request):
@@ -47,7 +44,7 @@ def search(request):
 
     if search_msg != "":
         images_filtered = services_nasa_image_gallery.getImagesBySearchInputLike(search_msg)
-        return home(request, images_filtered)
+        return render(request, "home.html", {"images": images_filtered, "favourite_list": favourite_list})
     else:
         return redirect("home")
 
