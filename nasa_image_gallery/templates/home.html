@@ -5,7 +5,7 @@
         <!-- Buscador del sitio -->
         <form class="d-flex" action="{% url 'buscar' %}" method="POST">
             {% csrf_token %}
-            <input class="form-control me-2" type="search" name="query" placeholder="Escribí una palabra" aria-label="Search">
+            <input class="form-control me-2" type="search" name="search_msg" placeholder="Escribí una palabra" aria-label="Search">
             <button class="btn btn-outline-success" type="submit">Buscar</button>
         </form>
     </div>
@@ -43,7 +43,7 @@
             <nav>
                 <ul class="pagination">
                     {% for i in q_pages %}
-                        <li class="page-item"><a class="page-link" href="{% url 'home' %}?page={{ i }}">{{ i }}</a></li>
+                        <li class="page-item"><a class="page-link" href="{% if search_msg %}{% url 'buscar' %}?search_msg={{ search_msg }}&page={{ i }}{% else %}{% url 'home' %}?page={{ i }}{% endif %}">{{ i }}</a></li>
                     {% endfor %}
                 </ul>
             </nav>
