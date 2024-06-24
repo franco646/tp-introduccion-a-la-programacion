@@ -14,7 +14,7 @@
     <div class="row row-cols-1 row-cols-md-3 g-4">
         {% for imagen in images %}
         <div class="col">
-            <div class="card">
+            <div class="card border-0 bg-body-tertiary rounded" style="box-shadow: 10px 13px 16px 1px rgba(0,0,0,0.6) !important">
                 <img src="{{ imagen.image_url}}" class="card-img-top" alt="imagen">
                 <div class="card-body">
                     <h5 class="card-title">{{ imagen.title}}</h5>
