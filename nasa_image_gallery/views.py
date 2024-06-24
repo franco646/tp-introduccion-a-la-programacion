@@ -8,7 +8,6 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout, login, authenticate
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator
-from django.http import HttpResponse
 
 Q_IMAGES_PER_PAGE = 10  # Define la cantidad de imágenes por página
 
@@ -20,7 +19,7 @@ def index_page(request):
 def getAllImagesAndFavouriteList(request):
     images = services_nasa_image_gallery.getAllImages()
     favourite_list = services_nasa_image_gallery.getAllFavouritesByUser(request) if request.user.is_authenticated else []
-    return [], favourite_list
+    return images, favourite_list
 
 # función principal de la galería.
 def home(request):
