@@ -28,21 +28,27 @@
                         <input type="hidden" name="description" value="{{ imagen.description }}">
                         <input type="hidden" name="image_url" value="{{ imagen.image_url }}">
                         <input type="hidden" name="date" value="{{ imagen.date }}">
-                        <textarea name="comment" class="form-control" placeholder="Añadir comentario"></textarea>
-                        {% if imagen in favourite_list %}
-                            <button type="submit" class="btn btn-primary btn-sm float-left" style="color:white" disabled>✔️ Ya está añadida a favoritos</button>
-                        {% else %}
-                            <button type="submit" class="btn btn-primary btn-sm float-left" style="color:white">❤️ Añadir a favoritos</button>
-                        {% endif %}
-                    </form>
-                    <form method="post" action="{% url 'marcar-no-interesante' %}">
-                        {% csrf_token %}
-                        <input type="hidden" name="title" value="{{ imagen.title }}">
-                        <input type="hidden" name="description" value="{{ imagen.description }}">
-                        <input type="hidden" name="image_url" value="{{ imagen.image_url }}">
-                        <input type="hidden" name="date" value="{{ imagen.date }}">
-                        <button type="submit" class="btn btn-danger btn-sm float-left" style="color:white">🚫 No es interesante</button>
-                    </form>
+                        <div class="row">
+                            <div class="col-8">
+                                <textarea name="comment" class="form-control h-100" placeholder="Añadir comentario"></textarea>
+                            </div>
+                            <div class="col-4">
+                                {% if imagen in favourite_list %}
+                                    <div class="col-4">
+                                        <button type="submit" class="btn btn-primary btn-sm float-left w-100" style="color:white" disabled>✔ Ya está añadida a favoritos</button>
+                                {% else %}
+                                    <button type="submit" class="btn btn-primary btn-sm float-left w-100 mb-1" style="color:white">❤ Añadir a favoritos</button>
+                                    <form method="post" action="{% url 'marcar-no-interesante' %}">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="title" value="{{ imagen.title }}">
+                                        <input type="hidden" name="description" value="{{ imagen.description }}">
+                                        <input type="hidden" name="image_url" value="{{ imagen.image_url }}">
+                                        <input type="hidden" name="date" value="{{ imagen.date }}">
+                                        <button type="submit" class="btn btn-danger btn-sm float-left w-100" style="color:white">🚫 No es interesante</button>
+                                    </form>
+                                {% endif %}
+                            </div>
+                        </div>
                 </div>
                 {% endif %}
             </div>
