@@ -4,19 +4,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi primera aplicación con Django</title>
-    {% load bootstrap5 %} {% bootstrap_css %} {% bootstrap_javascript %} {% load static %}
+    <title>Proyecto de Introducción a la Programación | Primer Semestre UNGS - 2024</title>
+    {% load bootstrap5 %} 
+    {% bootstrap_css %} 
+    {% bootstrap_javascript %} 
+    {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="icon" href="https://imgs.search.brave.com/44_et0xJ_8w4TPMUYjVue3ycGJpn6R4FuUxXnh_7bTw/rs:fit:32:32:1/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvNDEzYmM2MTUx/OTBjMjBjYjZlNzdm/ODdmMjYwYzE3NThi/NzRmMGY3YWJiZmRl/NGQyNjQ4Y2FjNjUw/NThiNmZlMi93d3cu/dW5ncy5lZHUuYXIv">
 </head>
 
 <body>
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">Proyecto TP</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+            <a class="navbar-brand" href="https://github.com/franco646/tp-introduccion-a-la-programacion/tree/main"</a> 
+            <img src="../static/NASA_Worm_logo.svg_-580x160.png" alt="" style="height: 40px;" />
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <img src="https://i.ibb.co/gw8bDFZ/image.png" alt="" border="0" style="width: 30px; height: 30px;" />
+        </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
@@ -32,14 +37,19 @@
                     {% endif %}
                     <li class="nav-item">
                         {% if request.user.is_authenticated %}
-                        <a class="nav-link" href="{% url 'logout' %}">Salir</a> {% else %}
-                        <a class="nav-link {% if request.path == '/login/' %}active{% endif %}" href="{% url 'login' %}">Iniciar sesión</a> {% endif %}
+                        <form action="{% url 'exit' %}" method="post">
+                            {% csrf_token %}
+                            <a class="nav-link" href="{% url 'logout' %}">Salir</a>
+                        </form>
+                        {% else %}
+                        <a class="nav-link {% if request.path == '/login/' %}active{% endif %}" href="{% url 'login' %}">Iniciar sesión</a>
+                        {% endif %}
                     </li>
                 </ul>
-
-
             </div>
         </div>
     </nav>
 
     {% block content %} {% endblock %} {% include "footer.html" %}
+</body>
+</html>
