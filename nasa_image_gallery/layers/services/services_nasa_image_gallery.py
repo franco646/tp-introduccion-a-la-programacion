@@ -39,3 +39,14 @@ def getAllFavouritesByUser(request):
 def deleteFavourite(request):
     favId = request.POST.get('id')
     return repositories.deleteFavourite(favId) # borramos un favorito por su ID.
+
+
+def markImageAsUninteresting(request):
+    image = mapper.fromTemplateIntoNASACard(request)
+    image.user = get_user(request)
+    return repositories.saveUninterestingImage(image)
+
+
+def getUninterestingImagesByUser(user):
+    uninteresting_images = repositories.getUninterestingImagesByUser(user)
+    return [mapper.fromRepositoryIntoNASACard(img) for img in uninteresting_images]

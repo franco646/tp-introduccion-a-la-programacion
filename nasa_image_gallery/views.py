@@ -19,6 +19,12 @@ def index_page(request):
 def getAllImagesAndFavouriteList(request):
     images = services_nasa_image_gallery.getAllImages()
     favourite_list = services_nasa_image_gallery.getAllFavouritesByUser(request) if request.user.is_authenticated else []
+
+
+    if request.user.is_authenticated:
+        uninteresting_images = services_nasa_image_gallery.getUninterestingImagesByUser(request.user)
+        images = [img for img in images if img not in uninteresting_images]
+
     return images, favourite_list
 
 # función principal de la galería.
@@ -126,3 +132,10 @@ def deleteFavourite(request):
 def exit(request):
     logout(request)
     return redirect('login')
+
+
+@login_required
+def markUninteresting(request):
+    if request.method == 'POST':
+        services_nasa_image_gallery.markImageAsUninteresting(request)
+    return redirect('home')

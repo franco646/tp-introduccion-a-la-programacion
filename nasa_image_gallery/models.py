@@ -13,3 +13,14 @@ class Favourite(models.Model):
 
     class Meta:
         unique_together = ('user', 'title', 'description', 'image_url', 'date', 'comment')
+
+
+class UninterestingImage(models.Model):
+    title = models.CharField(max_length=200)
+    description = models.TextField()
+    image_url = models.TextField()
+    date = models.DateField()
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = ('user', 'title', 'description', 'image_url', 'date')
