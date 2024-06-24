@@ -1,5 +1,4 @@
-{% extends 'header.html' %} 
-{% block content %}
+{% extends 'header.html' %} {% block content %}
 <main>
     <h1 class="text-center">Galería de Imágenes de la NASA</h1>
     <div class="d-flex justify-content-center" style="margin-bottom: 1%">
@@ -11,42 +10,45 @@
         </form>
     </div>
 
+
     <div class="row row-cols-1 row-cols-md-3 g-4">
         {% for imagen in images %}
         <div class="col">
             <div class="card">
-                <img src="{{ imagen.image_url }}" class="card-img-top" alt="imagen">
+                <img src="{{ imagen.image_url}}" class="card-img-top" alt="imagen">
                 <div class="card-body">
-                    <h5 class="card-title">{{ imagen.title }}</h5>
-                    <p class="card-text">{{ imagen.description }}</p>
+                    <h5 class="card-title">{{ imagen.title}}</h5>
+                    <p class="card-text">{{ imagen.description}}</p>
                 </div>
-            </div>
-            {% if request.user.is_authenticated %}
-            <div class="row">
-                <div class="col-8">
-                    <textarea name="comment" class="form-control h-100" placeholder="Añadir comentario"></textarea>
-                </div>
-                <div class="col-4">
-                    {% if imagen in favourite_list %}
-                    <button type="submit" class="btn btn-primary btn-sm float-left w-100" style="color:white" disabled>✔️ Ya está añadida a favoritos</button>
-                    {% else %}
-                    <button type="submit" class="btn btn-primary btn-sm float-left w-100 mb-1" style="color:white">❤️ Añadir a favoritos</button>
+                {% if request.user.is_authenticated %}
+                <div class="card-footer text-center">
+                    <form method="post" action="{% url 'agregar-favorito' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="title" value="{{ imagen.title }}">
+                        <input type="hidden" name="description" value="{{ imagen.description }}">
+                        <input type="hidden" name="image_url" value="{{ imagen.image_url }}">
+                        <input type="hidden" name="date" value="{{ imagen.date }}">
+                        <textarea name="comment" class="form-control" placeholder="Añadir comentario"></textarea>
+                        {% if imagen in favourite_list %}
+                            <button type="submit" class="btn btn-primary btn-sm float-left" style="color:white" disabled>✔️ Ya está añadida a favoritos</button>
+                        {% else %}
+                            <button type="submit" class="btn btn-primary btn-sm float-left" style="color:white">❤️ Añadir a favoritos</button>
+                        {% endif %}
+                    </form>
                     <form method="post" action="{% url 'marcar-no-interesante' %}">
                         {% csrf_token %}
                         <input type="hidden" name="title" value="{{ imagen.title }}">
                         <input type="hidden" name="description" value="{{ imagen.description }}">
                         <input type="hidden" name="image_url" value="{{ imagen.image_url }}">
                         <input type="hidden" name="date" value="{{ imagen.date }}">
-                        <button type="submit" class="btn btn-danger btn-sm float-left w-100" style="color:white">🚫 No es interesante</button>
+                        <button type="submit" class="btn btn-danger btn-sm float-left" style="color:white">🚫 No es interesante</button>
                     </form>
-                    {% endif %}
                 </div>
+                {% endif %}
             </div>
-            {% endif %}
         </div>
         {% endfor %}
     </div>
-
     <div class="row justify-content-center" style="margin-block: 100px;">
         <div class="col col-auto"> 
             <nav>

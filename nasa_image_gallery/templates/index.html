@@ -1,9 +1,9 @@
 {% extends 'header.html' %} {% block content %} {% if request.user.is_authenticated %}
 <h2 class="text-center">Bienvenido {{ user.username | upper }}!</h2>
 {% else %}
-<h2 class="text-center">¡Bienvenido a nuestro proyecto!</h2>
+<h2 class="text-center">Bienvenido!</h2>
 {% endif %}
 <p class="text-center">
-     <a href="{% url 'home' %}">Ver imagenes de la NASA</a>
+    Mirá las imágenes desde <a href="{% url 'home' %}">este link.</a>
 </p>
 {% endblock %}
