@@ -30,12 +30,11 @@
                         <input type="hidden" name="date" value="{{ imagen.date }}">
                         <div class="row">
                             <div class="col-8">
-                                <textarea name="comment" class="form-control h-100" placeholder="Añadir comentario"></textarea>
+                                <textarea name="comment" class="form-control h-100" placeholder="Añadir comentario" {% if imagen in favourite_list %}disabled{% endif %}></textarea>
                             </div>
                             <div class="col-4">
                                 {% if imagen in favourite_list %}
-                                    <div class="col-4">
-                                        <button type="submit" class="btn btn-primary btn-sm float-left w-100" style="color:white" disabled>✔ Ya está añadida a favoritos</button>
+                                        <button type="submit" class="btn btn-primary btn-sm float-left w-100 h-100" style="color:white" disabled>✔ Ya está añadida a favoritos</button>
                                 {% else %}
                                     <button type="submit" class="btn btn-primary btn-sm float-left w-100 mb-1" style="color:white">❤ Añadir a favoritos</button>
                                     <form method="post" action="{% url 'marcar-no-interesante' %}">
