@@ -8,8 +8,8 @@ class Favourite(models.Model):
     description = models.TextField()
     image_url = models.TextField()
     date = models.DateField()
-
+    comment = models.TextField(default='')
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE) # asociamos el favorito con el usuario en cuestión.
 
     class Meta:
-        unique_together = ('user', 'title', 'description', 'image_url', 'date')
+        unique_together = ('user', 'title', 'description', 'image_url', 'date', 'comment')

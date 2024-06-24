@@ -20,7 +20,7 @@ def index_page(request):
 def getAllImagesAndFavouriteList(request):
     images = services_nasa_image_gallery.getAllImages()
     favourite_list = services_nasa_image_gallery.getAllFavouritesByUser(request) if request.user.is_authenticated else []
-    return images, favourite_list
+    return [], favourite_list
 
 # función principal de la galería.
 def home(request):
@@ -113,7 +113,7 @@ def getAllFavouritesByUser(request):
 def saveFavourite(request):
     if request.method == 'POST':
         services_nasa_image_gallery.saveFavourite(request)
-    return redirect('home')
+    return redirect('favoritos')
 
 
 @login_required

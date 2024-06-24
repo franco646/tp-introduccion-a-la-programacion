@@ -4,14 +4,14 @@ from nasa_image_gallery.models import Favourite
 
 def saveFavourite(image):
     try:
-        fav = Favourite.objects.create(title=image.title, description=image.description, image_url=image.image_url, date=image.date, user=image.user)
+        fav = Favourite.objects.create(title=image.title, description=image.description, image_url=image.image_url, date=image.date, user=image.user, comment=image.comment)
         return fav
     except Exception as e:
         print(f"Error al guardar el favorito: {e}")
         return None
 
 def getAllFavouritesByUser(user):
-    favouriteList = Favourite.objects.filter(user=user).values('id', 'title', 'description', 'image_url', 'date')
+    favouriteList = Favourite.objects.filter(user=user).values('id', 'title', 'description', 'image_url', 'date', 'comment')
     return list(favouriteList)
 
 def deleteFavourite(id):
