@@ -17,12 +17,11 @@
 <body>
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
-            <a class="navbar-brand" href="https://github.com/franco646/tp-introduccion-a-la-programacion/tree/main"</a> 
             <img src="../static/NASA_Worm_logo.svg_-580x160.png" alt="" style="height: 40px;" />
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <img src="https://i.ibb.co/gw8bDFZ/image.png" alt="" border="0" style="width: 30px; height: 30px;" />
         </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent" aria-expanded="false">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
                         <a class="nav-link {% if request.path == '/' %}active{% endif %}" aria-current="page" href="{% url 'index-page' %}">Inicio</a>
