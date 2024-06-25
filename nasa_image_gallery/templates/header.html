@@ -15,37 +15,43 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container-fluid">
             <img src="../static/NASA_Worm_logo.svg_-580x160.png" alt="" style="height: 40px;" />
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <img src="https://i.ibb.co/gw8bDFZ/image.png" alt="" border="0" style="width: 30px; height: 30px;" />
         </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent" aria-expanded="false">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto ms-0 ms-lg-3">
+                <li class="nav-item">
+                    <a class="nav-link {% if request.path == '/' %}active{% endif %}" aria-current="page" href="{% url 'index-page' %}">Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if request.path == '/home/' %}active{% endif %}" aria-current="page" href="{% url 'home' %}">Galería</a>
+                </li>
+                {% if request.user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link {% if request.path == '/favourites/' %}active{% endif %}" href="{% url 'favoritos' %}">Favoritos</a>
+                </li>
+                {% endif %}
+            </ul>
+            <div class="d-flex">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link {% if request.path == '/' %}active{% endif %}" aria-current="page" href="{% url 'index-page' %}">Inicio</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {% if request.path == '/home/' %}active{% endif %}" aria-current="page" href="{% url 'home' %}">Galería</a>
-                    </li>
                     {% if request.user.is_authenticated %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'favoritos' %}">Favoritos</a>
-                    </li>
-                    {% endif %}
-                    <li class="nav-item">
-                        {% if request.user.is_authenticated %}
-                        <form action="{% url 'exit' %}" method="post">
-                            {% csrf_token %}
+                        <li>
                             <a class="nav-link" href="{% url 'logout' %}">Salir</a>
-                        </form>
-                        {% else %}
-                        <a class="nav-link {% if request.path == '/login/' %}active{% endif %}" href="{% url 'login' %}">Iniciar sesión</a>
-                        {% endif %}
-                    </li>
+                        </li>
+                    {% else %}
+                        <li>
+                            <a class="nav-link me-1 {% if request.path == '/login/' %}active{% endif %}" href="{% url 'login' %}">Iniciar sesión</a>
+                        </li>
+                        <li>
+                            <a class="btn {% if request.path == '/signup' %} btn-light {% else %} btn-outline-light {% endif %}" href="{% url 'signup' %}">Crear usuario</a>
+                        </li>
+                    {% endif %}
                 </ul>
             </div>
+        </div>
         </div>
     </nav>
 
