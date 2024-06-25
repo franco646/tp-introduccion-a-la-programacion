@@ -26,7 +26,7 @@
                 <div class="card-footer text-center">
                     <div class="row">
                         <div class="col-8">
-                            <form method="post" action="{% url 'agregar-favorito' %}">
+                            <form method="post" action="{% url 'agregar-favorito' %}" class="h-100">
                                 {% csrf_token %}
                                 <input type="hidden" name="title" value="{{ imagen.title }}">
                                 <input type="hidden" name="description" value="{{ imagen.description }}">
