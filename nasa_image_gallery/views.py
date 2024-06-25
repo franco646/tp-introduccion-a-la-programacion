@@ -49,11 +49,12 @@ def search(request):
     images, favourite_list = getAllImagesAndFavouriteList(request)
 
     search_msg = request.POST.get("search_msg", "") if request.method == 'POST' else request.GET.get("search_msg", "")
-
+    
     if search_msg != "":
         searched_images = services_nasa_image_gallery.getImagesBySearchInputLike(search_msg)
-        if len(searched_images) == 0:
-            return redirect('home')
+        if request.user.is_authenticated:
+            uninteresting_images = services_nasa_image_gallery.getUninterestingImagesByUser(request.user)
+            searched_images = [img for img in searched_images if img not in uninteresting_images]
 
         page = int(request.GET.get('page', '1'))
 
