@@ -40,6 +40,7 @@ def home(request):
     return render(request, 'home.html', {
         'images': filtered_images,
         'favourite_list': favourite_list,
+        'page': page,
         'q_pages': range(1, paginator.num_pages + 1),
     })
 
@@ -51,6 +52,8 @@ def search(request):
 
     if search_msg != "":
         searched_images = services_nasa_image_gallery.getImagesBySearchInputLike(search_msg)
+        if len(searched_images) == 0:
+            return redirect('home')
 
         page = int(request.GET.get('page', '1'))
 
@@ -62,6 +65,7 @@ def search(request):
             "images": filtered_images, 
             "favourite_list": favourite_list, 
             'q_pages': range(1, paginator.num_pages + 1), 
+            'page': page,
             'search_msg': search_msg})
     else:
         return redirect("home")
