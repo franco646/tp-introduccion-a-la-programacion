@@ -168,3 +168,23 @@ h5.card-title{
     color:#000000;
   
 }
+
+div.card-body{
+    color: #45424273
+}
+
+a {
+    color: #0400ff
+}
+
+div.text-center.p-3{
+    background-color: #36363680;
+}
+
+button.btn.btn-outline-success {
+    color: #ffffff;
+}
+
+h1.text-center {
+    font: bold 600 normal 100px/50px "Trebuchet MS", Helvetica, sans-serif;
+}
